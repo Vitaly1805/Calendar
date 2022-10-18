@@ -1,4 +1,5 @@
 const button = document.querySelector('.form__button')
+let listMonths = []
 
 button.addEventListener('click', () => {
   let inputYear = document.getElementById('input-year')
@@ -7,6 +8,10 @@ button.addEventListener('click', () => {
   inputYear.value = ''
 
   if(!year) return
+
+  if(listMonths.length > 0) {
+    clearCalendar()
+  }
 
   createCalendar(year)
 })
@@ -20,7 +25,7 @@ function createCalendar(year) {
 
 function createMonths(table, year) {
   const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
-  const daysOfWeek = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']
+  const daysOfWeek = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']
 
   for(let indexMonth = 0; indexMonth < 12; indexMonth++) {
     const date = new Date(year, indexMonth, 1)
@@ -31,6 +36,7 @@ function createMonths(table, year) {
     createHeadOfMonth(blockMonth, months[indexMonth])
     createNamesOfDaysOfWeek(blockMonth, daysOfWeek)
     createDaysOfWeek(blockMonth, daysOfWeek, date, indexMonth)
+    listMonths.push(blockMonth)
 
     table.append(blockMonth)
   }
@@ -95,4 +101,11 @@ function createDaysOfWeek(blockMonth, daysOfWeek, date, indexMonth) {
 
     blockMonth.append(week)
   }
+}
+
+function clearCalendar() {
+  listMonths.forEach(e => {
+    e.remove()
+  })
+  listMonths = []
 }
