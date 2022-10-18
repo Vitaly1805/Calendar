@@ -3,7 +3,7 @@
 .form {
   background: #819FF7;
   color: #fff;
-  height: 15vh;
+  height: 20vh;
   padding: 20px;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .calendar__body {
-  min-height: 85vh;
+  min-height: 80vh;
   color: #424242;
   padding: 20px;
   background: linear-gradient(90deg, #aea4e3, #d3ffe8);
@@ -118,7 +118,7 @@
   }
 }
 
-@media all and (max-width: 340px) {
+@media all and (max-width: 360px) {
   .form__inputs {
     display: flex;
     flex-direction: column;
