@@ -3,6 +3,7 @@
 .form {
   background: #819FF7;
   color: #fff;
+  height: 15vh;
   padding: 20px;
 }
 
@@ -34,6 +35,7 @@
 }
 
 .calendar__body {
+  min-height: 85vh;
   color: #424242;
   padding: 20px;
   background: linear-gradient(90deg, #aea4e3, #d3ffe8);
@@ -93,12 +95,7 @@
   margin: 0 1px;
 }
 
-.calendar__day:last-child {
-  background: #F2E0F7 ;
-  border-radius: 50%;
-}
-
-.calendar__day:nth-child(6){
+.calendar__day_chill {
   background: #F2E0F7;
   border-radius: 50%;
 }

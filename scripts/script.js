@@ -1,61 +1,98 @@
-// createCalendar(2022)
+const button = document.querySelector('.form__button')
 
-// function createCalendar(year) {
-//   const daysOfWeek = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']
-//   let table = document.createElement('table')
+button.addEventListener('click', () => {
+  let inputYear = document.getElementById('input-year')
+  const year = inputYear.value
 
-//   for(let indexMonth = 0; indexMonth < 12; indexMonth++) {
-//     const date = new Date(year, indexMonth, 1)
+  inputYear.value = ''
 
-//     createHeadCalendar(table, daysOfWeek)
-//     createBodyCalendar(table, daysOfWeek, date, indexMonth)
-//   }
+  if(!year) return
 
-//   document.body.append(table)
-// }
+  createCalendar(year)
+})
 
-// function createBodyCalendar(table, daysOfWeek, date, indexMonth) {
-//   while(indexMonth === date.getMonth()) {
-//     const tr = document.createElement('tr')
+function createCalendar(year) {
+  let table = document.querySelector('.calendar__months')
 
-//     daysOfWeek.forEach((e, i) => {
-//       const td = document.createElement('td')
-//       const dayOfWeek = date.getUTCDay()
+  addTitle(year)
+  createMonths(table, year)
+}
 
-//       if(indexMonth !== date.getMonth()) return
+function createMonths(table, year) {
+  const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
+  const daysOfWeek = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']
 
-//       if(i === dayOfWeek) {
-//         const day = date.getDate()
+  for(let indexMonth = 0; indexMonth < 12; indexMonth++) {
+    const date = new Date(year, indexMonth, 1)
+    let blockMonth = document.createElement('div')
 
-//         td.textContent = day
-//         date.setDate(day + 1)
-//       }
+    blockMonth.classList.add('calendar__month')
 
-//       tr.append(td)
-//     })
+    createHeadOfMonth(blockMonth, months[indexMonth])
+    createNamesOfDaysOfWeek(blockMonth, daysOfWeek)
+    createDaysOfWeek(blockMonth, daysOfWeek, date, indexMonth)
 
-//     table.append(tr)
-//   }
-// }
+    table.append(blockMonth)
+  }
+}
 
-// function createHeadCalendar(table, daysOfWeek) {
-//   // const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
+function createHeadOfMonth(blockMonth, monthName) {
+  let blockTitleMonth = document.createElement('div')
 
-//   // const tr = document.createElement('tr')
-//   // const td = document.createElement('td')
+  blockTitleMonth.classList.add('calendar__subtitle')
+  blockTitleMonth.textContent = monthName
+  blockMonth.append(blockTitleMonth)
+}
 
-//   // td.textContent = months[indexMonth]
-//   // console.log(months[indexMonth])
-//   // tr.append(td)
-//   // table.append(tr)
+function createNamesOfDaysOfWeek(blockMonth, daysOfWeek) {
+  let blockDaysOfWeek = document.createElement('div')
 
-//   let trHead = document.createElement('tr')
+  blockDaysOfWeek.classList.add('calendar__days-week')
 
-//   daysOfWeek.forEach(e => {
-//     const th = document.createElement('th')
-//     th.textContent = e
-//     trHead.append(th)
-//   })
+  daysOfWeek.forEach(e => {
+    let blockDayOfWeek = document.createElement('div')
 
-//   table.append(trHead)
-// }
+    blockDayOfWeek.classList.add('calendar__day-week')
+    blockDayOfWeek.textContent = e
+    blockDaysOfWeek.append(blockDayOfWeek)
+  })
+
+  blockMonth.append(blockDaysOfWeek)
+}
+
+function addTitle(year) {
+  let title = document.querySelector('.calendar__title')
+  title.textContent = year
+}
+
+function createDaysOfWeek(blockMonth, daysOfWeek, date, indexMonth) {
+  while(indexMonth === date.getMonth()) {
+    let week = document.createElement('div')
+    
+    week.classList.add('calendar__week')
+
+    daysOfWeek.forEach((e, i) => {
+      const blockDay = document.createElement('div')
+      const dayOfWeek = date.getUTCDay()
+
+      blockDay.classList.add('calendar__day')
+
+      if(indexMonth !== date.getMonth()) return
+
+      if(i === dayOfWeek) {
+        const day = date.getDate()
+
+        blockDay.textContent = day
+        date.setDate(day + 1)
+
+        if(i > 4) {
+          blockDay.classList.add('calendar__day_chill')
+        }
+      }
+
+      week.append(blockDay)
+    })
+
+    blockMonth.append(week)
+  }
+}
